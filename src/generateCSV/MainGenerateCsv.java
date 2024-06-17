@@ -29,12 +29,13 @@ public class MainGenerateCsv {
 		List<Categoria> categorias = Arrays.asList(new Categoria(1, "Eletrônicos"), new Categoria(2, "Roupas"),
 				new Categoria(3, "Livros"));
 
-		generateCsvFile("C:/joshua/usuarios.csv", usuarios, Usuario.class);
-		generateCsvFile("C:/joshua/categorias.csv", categorias, Categoria.class);
+		generateCsvFile("C:/joshua/usuarios.csv", usuarios, Usuario.class, new String[] { "Id", "Nome", "E-mail" });
+		generateCsvFile("C:/joshua/categorias.csv", categorias, Categoria.class, null);
 	}
 
-	public static void generateCsvFile(String filePath, List<? extends CsvRow> csvRows, Class<?> clazz) {
-		String[] headers = extractHeaders(clazz);
+	public static void generateCsvFile(String filePath, List<? extends CsvRow> csvRows, Class<?> clazz,
+			String[] optionalheaders) {
+		String[] headers = optionalheaders == null ? extractHeaders(clazz) : optionalheaders;
 
 		try (FileWriter writer = new FileWriter(filePath)) {
 			writeLine(writer, headers);
